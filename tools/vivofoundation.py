@@ -12,7 +12,7 @@ __version__ = "2.00"
 concept_dictionary = {}
 
 VIVO_URI_PREFIX = "http://vivo.ufl.edu/individual/"
-VIVO_QUERY_URI = "http://localhost:8000/ds/sparql" # For vagrant development
+VIVO_QUERY_URI = "http://sparql.vivo.ufl.edu/VIVO/sparql"  # UF VIVO Production
 
 import urllib, urllib2, json, random
 import string
@@ -20,9 +20,7 @@ from datetime import datetime, date
 import time
 from xml.dom.minidom import parseString
 import sys, httplib
-import tempita
 import csv
-from Bio import Entrez
 
 class UnknownDateTimePrecision(Exception):
     """
@@ -654,12 +652,12 @@ def get_triples(uri):
     """
     Given a VIVO URI, return all the triples referencing that URI as subject
     """
-    query = tempita.Template("""
+    query = """
     SELECT ?p ?o WHERE
     {
-    <{{uri}}> ?p ?o .
-    }""")
-    query = query.substitute(uri=uri)
+        <{{uri}}> ?p ?o .
+    }"""
+    query = query.replace("{{uri}}", uri)
     result = vivo_sparql_query(query)
     return result
 

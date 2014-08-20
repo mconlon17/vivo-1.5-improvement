@@ -1,5 +1,5 @@
 """
-    test_find_vivo_uri.py -- return the first VIVO URI that staisfies a
+    test_find_vivo_uri.py -- return the first VIVO URI that satisfies a
     match on predicate and value
 
     Version 0.1 MC 2014-03-25

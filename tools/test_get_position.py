@@ -19,7 +19,8 @@ from datetime import datetime
 import json
 
 print datetime.now(), "Start"
-position_uris = [
+position_uris = \
+    [
     "http://vivo.ufl.edu/individual/n7320",
     "http://vivo.ufl.edu/individual/n6535"
     ]
