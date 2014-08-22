@@ -247,6 +247,7 @@ def assert_resource_property(uri, resource_property, resource_uri):
     This is often called in invertable pairs -- each uri has the other as
     a resource. Example: homeDept and homeDeptFor
     """
+    import tempita
     resource_property_template = tempita.Template(
     """    <rdf:Description rdf:about="{{uri}}">
         <{{resource_property}} rdf:resource="{{resource_uri}}"/>
@@ -438,7 +439,7 @@ def merge_uri(from_uri, to_uri):
 
     triples = get_triples(from_uri)["results"]["bindings"]
     for triple in triples:
-        p = translate_predicate(triple["p"]["value"])
+        p = tag_predicate(triple["p"]["value"])
         o = triple["o"]
         if o["type"] == "uri":
             sub = assert_resource_property(from_uri, p, o["value"])
@@ -456,7 +457,7 @@ def merge_uri(from_uri, to_uri):
     triples = get_references(from_uri)["results"]["bindings"]
     for triple in triples:
         s = triple["s"]["value"]
-        p = translate_predicate(triple["p"]["value"])
+        p = tag_predicate(triple["p"]["value"])
         [add, sub] = update_resource_property(s, p, from_uri, to_uri)
         srdf = srdf + sub
         ardf = ardf + add
@@ -497,7 +498,7 @@ class UnicodeCsvReader(object):
     """
     From http://stackoverflow.com/questions/1846135/python-csv-
     library-with-unicode-utf-8-support-that-just-works. Added errors='ignore'
-    to handle cases when the input file mispresents itself as utf-8.
+    to handle cases when the input file misrepresents itself as utf-8.
     """
     def __init__(self, f, encoding="utf-8", **kwargs):
         self.csv_reader = csv.reader(f, **kwargs)
@@ -681,12 +682,12 @@ def get_references(uri):
     Given a VIVO uri, return all the triples that have the given uri as an
     object
     """
-    query = tempita.Template("""
+    query = """
     SELECT ?s ?p WHERE
     {
     ?s ?p <{{uri}}> .
-    }""")
-    query = query.substitute(uri=uri)
+    }"""
+    query = query.replace("{{uri}}", uri)
     result = vivo_sparql_query(query)
     return result
 
@@ -696,7 +697,7 @@ def get_vivo_value(uri, predicate):
     the result is a single valued string.
 
     Notes:
-    --  if the there are mulitple values that meet the criteria, the first one
+    --  if the there are multitple values that meet the criteria, the first one
         is returned
     --  if no values meet the criteria, None is returned
     --  this function is very inefficient, making a SPARQL query for every
