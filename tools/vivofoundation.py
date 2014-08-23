@@ -1260,7 +1260,7 @@ def vivo_sparql_query(query,
     PREFIX ocrer: <http://purl.org/net/OCRe/research.owl#>
     PREFIX ocresd: <http://purl.org/net/OCRe/study_design.owl#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    PREFIX ufv: <http://vivo.ufl.edu/ontology/vivo-ufl/>
+    PREFIX ufVivo: <http://vivo.ufl.edu/ontology/vivo-ufl/>
     PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
     PREFIX vitro-public: <http://vitro.mannlib.cornell.edu/ns/vitro/public#>
     PREFIX vivo: <http://vivoweb.org/ontology/core#>

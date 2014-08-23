@@ -192,14 +192,15 @@ def make_course_dictionary(debug=False):
     Make a course dictionary from VIVO contents.  Key is course number
     such as ABF2010C. Value is URI.
     """
-    query = tempita.Template("""
+
+    from vivofoundation import vivo_sparql_query
+    query = """
     SELECT ?x ?label ?coursenum
     WHERE {
       ?x a ufVivo:Course .
       ?x ufVivo:courseNum ?coursenum .
-    }""")
-    query = query.substitute()
-    result = vt.vivo_sparql_query(query)
+    }"""
+    result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
     except:
@@ -224,14 +225,14 @@ def make_section_dictionary(debug=False):
     Make a section dictionary from VIVO contents.  Key is section number.
     Value is URI.
     """
-    query = tempita.Template("""
+    from vivofoundation import vivo_sparql_query
+    query = """
     SELECT ?x ?label
         WHERE {
         ?x a ufVivo:CourseSection .
         ?x rdfs:label ?label .
-    }""")
-    query = query.substitute()
-    result = vt.vivo_sparql_query(query)
+    }"""
+    result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
     except:
