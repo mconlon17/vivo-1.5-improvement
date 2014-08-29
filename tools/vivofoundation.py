@@ -996,13 +996,12 @@ def make_concept_dictionary(debug=False):
     global concept_dictionary
     concept_dictionary = {}
 
-    query = tempita.Template("""
+    query = """
         SELECT ?uri ?label WHERE
         {
         ?uri a skos:Concept .
         ?uri rdfs:label ?label .
-        }""")
-    query = query.substitute()
+        }"""
     result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
