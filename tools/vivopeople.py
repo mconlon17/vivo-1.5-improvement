@@ -1081,12 +1081,12 @@ def make_ufid_dictionary(debug=False):
     """
     Make a dictionary for people in UF VIVO.  Key is UFID.  Value is URI.
     """
-    query = tempita.Template("""
+    from vivofoundation import vivo_sparql_query
+    query = """
     SELECT ?x ?ufid WHERE
     {
     ?x ufVivo:ufid ?ufid .
-    }""")
-    query = query.substitute()
+    }"""
     result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])

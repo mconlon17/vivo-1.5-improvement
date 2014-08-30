@@ -7,19 +7,19 @@
 __author__ = "Michael Conlon"
 __copyright__ = "Copyright 2014, University of Florida"
 __license__ = "BSD 3-Clause license"
-__version__ = "2.00"
+__version__ = "2.01"
 
 concept_dictionary = {}
 
 VIVO_URI_PREFIX = "http://vivo.ufl.edu/individual/"
 VIVO_QUERY_URI = "http://sparql.vivo.ufl.edu/VIVO/sparql"  # UF VIVO Production
 
-import urllib, urllib2, json, random
+import urllib
+import json
+import random
 import string
-from datetime import datetime, date
+from datetime import datetime
 import time
-from xml.dom.minidom import parseString
-import sys, httplib
 import csv
 
 class UnknownDateTimePrecision(Exception):
@@ -763,14 +763,16 @@ def find_vivo_uri(predicate, value):
     --  this function is very inefficient, making a SPARQL query for every
         value. Use only when strictly needed!
     """
-    query = tempita.Template("""
+    from vivofoundation import vivo_sparql_query
+    query = """
     SELECT ?uri WHERE
     {
     ?uri {{predicate}} "{{value}}" .
     }
     LIMIT 1
-    """)
-    query = query.substitute(predicate=predicate,value=value)
+    """
+    query = query.replace("{{predicate}}", predicate)
+    query = query.replace("{{value}}", value)
     result = vivo_sparql_query(query)
     try:
         b = result["results"]["bindings"][0]
@@ -1039,13 +1041,12 @@ def make_deptid_dictionary(debug=False):
     """
     Make a dictionary for orgs in UF VIVO.  Key is DeptID.  Value is URI.
     """
-    query = tempita.Template("""
+    query = """
     SELECT ?x ?deptid WHERE
     {
     ?x rdf:type foaf:Organization .
     ?x ufVivo:deptID ?deptid .
-    }""")
-    query = query.substitute()
+    }"""
     result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
@@ -1054,7 +1055,7 @@ def make_deptid_dictionary(debug=False):
     if debug:
         print query, count, result["results"]["bindings"][0], \
             result["results"]["bindings"][1]
-    #
+
     deptid_dictionary = {}
     i = 0
     while i < count:

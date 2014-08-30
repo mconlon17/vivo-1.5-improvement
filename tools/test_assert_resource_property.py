@@ -5,24 +5,26 @@
     not check for a valid predicate, nor a valid resource URI.
 
     Version 0.1 MC 2013-12-27
-    --  Initial version.
+    --  Initial version
+    Version 0.2 MC 2014-08-30
+    --  PEP 8, support for vivofoundation
 """
 
-__author__      = "Michael Conlon"
-__copyright__   = "Copyright 2013, University of Florida"
-__license__     = "BSD 3-Clause license"
-__version__     = "0.1"
+__author__ = "Michael Conlon"
+__copyright__ = "Copyright 2014, University of Florida"
+__license__ = "BSD 3-Clause license"
+__version__ = "0.2"
 
-import vivotools as vt
+from vivofoundation import assert_resource_property
 from datetime import datetime
 
-print datetime.now(),"Start"
+print datetime.now(), "Start"
 
-print vt.assert_resource_property("http://a.b","http://c.d","http://e.f")
-print vt.assert_resource_property("http://a.b","vivo:authorInAuthorship",
+print assert_resource_property("http://a.b", "http://c.d", "http://e.f")
+print assert_resource_property("http://a.b", "vivo:authorInAuthorship",
                                   "http://c.d")
-print vt.assert_resource_property("http://a.b","vivo:authorinauthorlist",
+print assert_resource_property("http://a.b", "vivo:authorInAuthorlist",
                                   "42")
 
-print datetime.now(),"Finish"
+print datetime.now(), "Finish"
 

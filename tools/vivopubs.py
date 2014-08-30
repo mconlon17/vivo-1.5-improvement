@@ -1401,14 +1401,14 @@ def make_title_dictionary(debug=False):
     Extract all the titles of documents in VIVO and organize them into a
     dictionary keyed by prepared label with value URI
     """
-    query = tempita.Template("""
+    from vivofoundation import vivo_sparql_query
+    from vivofoundation import key_string
+    query = """
     SELECT ?x ?label WHERE
     {
-    ?x rdf:type bibo:Document .
+    ?x a bibo:Document .
     ?x rdfs:label ?label .
-    }""")
-    title_dictionary = {}
-    query = query.substitute()
+    }"""
     result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
@@ -1417,7 +1417,7 @@ def make_title_dictionary(debug=False):
     if debug:
         print query, count, result["results"]["bindings"][0], \
             result["results"]["bindings"][1]
-    #
+
     title_dictionary = {}
     i = 0
     while i < count:
@@ -1434,6 +1434,7 @@ def find_title(title, title_dictionary):
     Given a title, and a title dictionary, find the document in VIVO with that
     title.  Return True and URI if found.  Return False and None if not found
     """
+    from vivofoundation import key_string
     key = key_string(title)
     try:
         uri = title_dictionary[key]
@@ -1448,13 +1449,14 @@ def make_publisher_dictionary(debug=False):
     Extract all the publishers from VIVO and organize them into a dictionary
     keyed by prepared label with value URI
     """
-    query = tempita.Template("""
+    from vivofoundation import vivo_sparql_query
+    from vivofoundation import key_string
+    query = """
     SELECT ?x ?label WHERE
     {
-    ?x rdf:type core:Publisher .
+    ?x a vivo:Publisher .
     ?x rdfs:label ?label .
-    }""")
-    query = query.substitute()
+    }"""
     result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
@@ -1481,6 +1483,8 @@ def find_publisher(publisher, publisher_dictionary):
     VIVO with that label.  Return True and URI if found.  Return False and
     None if not found
     """
+    from vivofoundation import key_string
+
     key = key_string(publisher)
     try:
         uri = publisher_dictionary[key]
@@ -1495,13 +1499,13 @@ def make_journal_dictionary(debug=False):
     Extract all the journals from VIVO and organize them into a dictionary
     keyed by ISSN with value URI
     """
-    query = tempita.Template("""
+    from vivofoundation import vivo_sparql_query
+    query = """
     SELECT ?x ?issn WHERE
     {
     ?x rdf:type bibo:Journal .
     ?x bibo:issn ?issn .
-    }""")
-    query = query.substitute()
+    }"""
     result = vivo_sparql_query(query)
     try:
         count = len(result["results"]["bindings"])
@@ -1542,6 +1546,8 @@ def catalyst_pmid_request(first, middle, last, email, debug=False):
 
     Uses HTTP XML Post request, by www.forceflow.be
     """
+    import tempita
+    import httplib
     request = tempita.Template("""
         <?xml version="1.0"?>
         <FindPMIDs>
