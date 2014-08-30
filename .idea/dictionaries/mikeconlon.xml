@@ -1,13 +1,17 @@
 <component name="ProjectDictionaryState">
   <dictionary name="mikeconlon">
     <words>
+      <w>authorships</w>
       <w>bibo</w>
+      <w>biosketches</w>
       <w>crassicornis</w>
       <w>cytolytic</w>
+      <w>datatype</w>
       <w>deptid</w>
       <w>deptids</w>
       <w>dexmedetomidine</w>
       <w>dopaminergic</w>
+      <w>entrez</w>
       <w>foaf</w>
       <w>hypotension</w>
       <w>isni</w>
@@ -19,9 +23,11 @@
       <w>paniculatum</w>
       <w>pmid</w>
       <w>prader</w>
+      <w>pubmed</w>
       <w>rdfs</w>
       <w>roxithromycin</w>
       <w>salvinorin</w>
+      <w>sparql</w>
       <w>sphingomyelin</w>
       <w>syzygium</w>
       <w>thieme</w>
@@ -30,11 +36,15 @@
       <w>ufid</w>
       <w>ufids</w>
       <w>unfindable</w>
+      <w>untag</w>
       <w>urticina</w>
       <w>vivo</w>
+      <w>vivocourses</w>
       <w>vivofoundation</w>
+      <w>vivogrants</w>
       <w>vivopeople</w>
       <w>vivopubs</w>
+      <w>webpage</w>
     </words>
   </dictionary>
 </component>

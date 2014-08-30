@@ -556,7 +556,7 @@ def read_csv(filename, skip=True):
     heading = []
     row_number = 0
     data = {}
-    for row in UnicodeCsvReader(open(filename, 'rb'), delimiter="|"):
+    for row in UnicodeCsvReader(open(filename, 'rU'), delimiter="|"):
         i = 0
         for r in row:
             # remove white space fore and aft
@@ -581,7 +581,7 @@ def read_csv(filename, skip=True):
                            str(len(row))+" data values. Row contents = "+
                            str(row))
         else:
-            pass #  row has wrong number of columns and skip is True
+            pass  # row has wrong number of columns and skip is True
     return data
 
 

@@ -3,7 +3,7 @@ VIVO Tools Change log
     1.1     2013-03-02 MC
             Added assert_data_property to generate RDF for asserting that an
             entity have a named data property value
-            Added update_data property to generate addtion and subtraction RDF
+            Added update_data property to generate addition and subtraction RDF
             based on five case logic to update a VIVO data property value with
             a source data property value
             Added hr_abbrev_to_words to fix position and working titles
@@ -22,7 +22,7 @@ VIVO Tools Change log
     1.42    2013-08-22 MC
             added Skip=True to read.csv to skip rows without the number of
             values in the header.  skip=False will throw an exception on
-            first such occurance
+            first such occurrence
     1.43    2013-09-02 MC
             get_person now returns preferred_title.
             get_person now returns person['home_dept_uri'] if exists
@@ -41,7 +41,7 @@ VIVO Tools Change log
             Renamed get_pubmed_values_from_pubmed to simply
             get_pubmed_values
     1.47    2013-12-10 MC
-            Added additional ttributes to get_pubmed and get_publication
+            Added additional attributes to get_pubmed and get_publication
     1.48    2013-12-14 MC
             Add retry code to get_pubmed to handle Entrez non-response
     1.49    2014-01-02 MC
@@ -84,9 +84,14 @@ VIVO Tools Change log
 	1.60	2014-07-12 MC
 			improve RDF formatting for webpage and concept
 	2.00    2014-07-18 MC
-			Beginning work on Tools 2.0 for the 1.6 upgrade
-			VIVO_QUERY_URI can now be used to direct sparql queries at an
+			Beginning work on Tools 2.0
+			VIVO_QUERY_URI can now be used to direct sparql queries at any sparql endpoint.
 			VIVO_URI_PREFIX is now used to indicate the URI of randomly 
 			generated uris.  Used by get_vivo_uri()
 			update_entity provides a table driven means for updating
-			attributes for any VIVO entity.
+			attributes for any VIVO entity.  Tools now in five modules:
+			vivofoundation, vivopubs, vivogrants, vivocourses, vivopeople
+    2.01    2014-08-30 MC
+            Code formatting improvements.  Test functions through *_find_* updated for PEP 8
+            and new vivo tools modules.  read_csv now opens using 'rU' rather than 'rb'.
+            Fixed typos in this file.

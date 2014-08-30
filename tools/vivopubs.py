@@ -1194,13 +1194,14 @@ def get_pubmed_values(doi, pmid= None, debug=False):
     if 'pmcid' in values:
         values["full_text_uri"] = \
             "http://www.ncbi.nlm.nih.gov/pmc/articles/" + \
-            values["pmcid"].upper()+ "/pdf"
+            values["pmcid"].upper() + "/pdf"
     return values
 
 def get_authorship(authorship_uri):
     """
     Given a URI, return an object that contains the authorship it represents
     """
+    from vivofoundation import get_triples
     authorship = {'authorship_uri':authorship_uri}
     triples = get_triples(authorship_uri)
     try:
