@@ -7,15 +7,15 @@
     
 """
 
-__author__      = "Michael Conlon"
-__copyright__   = "Copyright 2013, University of Florida"
-__license__     = "BSD 3-Clause license"
-__version__     = "0.1"
+__author__ = "Michael Conlon"
+__copyright__ = "Copyright 2013, University of Florida"
+__license__ = "BSD 3-Clause license"
+__version__ = "0.2"
 
-import vivotools as vt
+from vivopeople import get_degree
 from datetime import datetime
 
-print datetime.now(),"Start"
+print datetime.now(), "Start"
 degrees = [
     "http://vivo.ufl.edu/individual/n195825",
     "http://vivo.ufl.edu/individual/n31642",
@@ -29,5 +29,5 @@ degrees = [
     "http://vivo.ufl.edu/individual/n56190",
     ]
 for degree in degrees:
-    print "\n",vt.get_degree(degree)
-print datetime.now(),"Finish"
+    print "\n", get_degree(degree)
+print datetime.now(), "Finish"

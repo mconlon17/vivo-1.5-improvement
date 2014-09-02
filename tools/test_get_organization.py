@@ -1,6 +1,6 @@
 """
     test_get_organization.py -- Given a URI of an organization entity in VIVO,
-    return a python sturcture containing attributes of the organization
+    return a python structure containing attributes of the organization
 
     Version 0.1 MC 2013-12-27
     --  Initial version.
@@ -16,7 +16,7 @@ __version__ = "0.2"
 from vivofoundation import get_organization
 from datetime import datetime
 
-print datetime.now(),"Start"
-print "\n",get_organization("http://vivo.ufl.edu/individual/n2003")
-print "\n",get_organization("http://vivo.ufl.edu/individual/n8763427")
-print datetime.now(),"Finish"
+print datetime.now(), "Start"
+print "\n", get_organization("http://vivo.ufl.edu/individual/n2003")
+print "\n", get_organization("http://vivo.ufl.edu/individual/n8763427")
+print datetime.now(), "Finish"

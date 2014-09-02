@@ -695,41 +695,49 @@ def get_references(uri):
     result = vivo_sparql_query(query)
     return result
 
+
 def get_vivo_value(uri, predicate):
     """
     Given a VIVO URI, and a predicate, get a value for the predicate.  Assumes
     the result is a single valued string.
 
     Notes:
-    --  if the there are multitple values that meet the criteria, the first one
+    --  if the there are multiple values that meet the criteria, the first one
         is returned
     --  if no values meet the criteria, None is returned
     --  this function is very inefficient, making a SPARQL query for every
         value. Use only when strictly needed!
     """
-    query = tempita.Template("""
-    SELECT ?o WHERE
+    query = """
+    SELECT ?o
+    WHERE
     {
-    <{{uri}}> {{predicate}} ?o .
+        <{{uri}}> {{predicate}} ?o .
     }
-    """)
-    query = query.substitute(uri=uri, predicate=predicate)
+    """
+    query = query.replace("{{uri}}", uri)
+    query = query.replace("{{predicate}}", predicate)
     result = vivo_sparql_query(query)
     try:
         b = result["results"]["bindings"][0]
         o = b['o']['value']
         return o
-    except:
+    except KeyError:
         return None
+    except IndexError:
+        return None
+    except TypeError:
+        return None
+
 
 def get_value(uri, predicate):
     """
-    Given a VIVO URI, and a predicate, get a value for the rpedicate.  Assumes
+    Given a VIVO URI, and a predicate, get a value for the predicate.  Assumes
     the result is single valued.  The result is a dictionary returned by the
     query.  This enables lang and datatype processing.
 
     Notes:
-    --  if the there are mulitple values that meet the criteria, the first one
+    --  if the there are multiple values that meet the criteria, the first one
         is returned
     --  if no values meet the criteria, None is returned
     --  this function is very inefficient, making a SPARQL query for every
@@ -969,7 +977,7 @@ def get_datetime_interval(datetime_interval_uri):
     Given a URI, return an object that contains the datetime_interval it
     represents
     """
-    datetime_interval = {'datetime_interval_uri':datetime_interval_uri}
+    datetime_interval = {'datetime_interval_uri': datetime_interval_uri}
     triples = get_triples(datetime_interval_uri)
     try:
         count = len(triples["results"]["bindings"])

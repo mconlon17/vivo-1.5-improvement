@@ -250,10 +250,16 @@ def improve_grant_title(s):
     t = t.replace(" #", "-") # restore -
     return t[0].upper() + t[1:-1] # Take off the trailing space
 
+
 def get_grant(grant_uri, get_investigators=False):
     """
     Given a URI, return an object that contains the grant it represents
     """
+    from vivofoundation import get_triples
+    from vivofoundation import get_organization
+    from vivofoundation import get_datetime_interval
+    from vivofoundation import get_role
+
     grant = {'grant_uri':grant_uri}
     grant['contributing_role_uris'] = []
     grant['pi_uris'] = []
@@ -364,6 +370,7 @@ def get_grant(grant_uri, get_investigators=False):
                 person['role'] = 'investigator'
                 grant['investigators'].append(person)
     return grant
+
 
 def string_from_grant(grant):
     """

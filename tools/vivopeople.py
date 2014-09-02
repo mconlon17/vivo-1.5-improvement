@@ -490,11 +490,16 @@ def get_degree(degree_uri):
     training) it represents
 
     """
-    degree = {'degree_uri':degree_uri}
+    from vivofoundation import get_triples
+    from vivofoundation import get_vivo_value
+    from vivofoundation import get_organization
+    from vivofoundation import get_datetime_interval
+
+    degree = {'degree_uri': degree_uri}
     triples = get_triples(degree_uri)
     try:
         count = len(triples["results"]["bindings"])
-    except:
+    except KeyError:
         count = 0
     i = 0
     while i < count:
@@ -504,21 +509,21 @@ def get_degree(degree_uri):
         if p == "http://vivoweb.org/ontology/core#majorField":
             degree['major_field'] = o
 
-        # deref the academic degree
+        # dereference the academic degree
 
         if p == "http://vivoweb.org/ontology/core#degreeEarned":
             degree['earned_uri'] = o
             degree['degree_name'] = get_vivo_value(o, 'core:abbreviation')
 
-        # deref the Institution
+        # dereference the Institution
 
         if p == "http://vivoweb.org/ontology/core#trainingAtOrganization":
             degree['training_institution_uri'] = o
             institution = get_organization(o)
-            if 'label' in institution: # home department might be incomplete
+            if 'label' in institution:  # home department might be incomplete
                 degree['institution_name'] = institution['label']
 
-        # deref the datetime interval
+        # dereference the datetime interval
 
         if p == "http://vivoweb.org/ontology/core#dateTimeInterval":
             datetime_interval = get_datetime_interval(o)
@@ -527,7 +532,7 @@ def get_degree(degree_uri):
                 degree['start_date'] = datetime_interval['start_date']
             if 'end_date' in datetime_interval:
                 degree['end_date'] = datetime_interval['end_date']
-        i = i + 1
+        i += 1
     return degree
 
 def get_position(position_uri):
