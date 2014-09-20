@@ -21,8 +21,8 @@ import json
 print datetime.now(), "Start"
 position_uris = \
     [
-    "http://vivo.ufl.edu/individual/n7320",
-    "http://vivo.ufl.edu/individual/n6535"
+        "http://vivo.ufl.edu/individual/n7320",
+        "http://vivo.ufl.edu/individual/n6535"
     ]
 for position_uri in position_uris:
     print "\n", json.dumps(get_position(position_uri), indent=4)

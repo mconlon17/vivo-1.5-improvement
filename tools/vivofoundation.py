@@ -952,6 +952,7 @@ def get_webpage(webpage_uri):
         i = i + 1
     return webpage
 
+
 def get_datetime_value(datetime_value_uri):
     """
     Given a URI, return an object that contains the datetime value it
@@ -966,8 +967,12 @@ def get_datetime_value(datetime_value_uri):
             p = row['p']['value']
             o = row['o']['value']
             if p == "http://vivoweb.org/ontology/core#dateTime":
-                datetime_value['date_time'] = datetime.strptime(o,\
-                    "%Y-%m-%dT%H:%M:%S")
+                if len(o) == 10:
+                    datetime_value['date_time'] = datetime.strptime(o, "%Y-%m-%d")
+                elif len(o) == 19:
+                    datetime_value['date_time'] = datetime.strptime(o, "%Y-%m-%dT%H:%M:%S")
+                else:
+                    print "Length error in datetime", o
             if p == "http://vivoweb.org/ontology/core#dateTimePrecision":
                 datetime_value['datetime_precision'] = tag_predicate(o)
     return datetime_value

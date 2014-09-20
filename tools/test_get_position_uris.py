@@ -19,10 +19,9 @@ from datetime import datetime
 print datetime.now(), "Start"
 
 print "\nConlon"
-print get_position_uris("http://vivo.ufl.edu/individual/n3715")
+print get_position_uris("http://vivo.ufl.edu/individual/n25562")
 
-print "\nAberta"
-print get_position_uris("http://vivo.ufl.edu/individual/n3428")
+print "\nBarnes"
+print get_position_uris("http://vivo.ufl.edu/individual/n64866")
 
 print datetime.now(), "Finish"
-

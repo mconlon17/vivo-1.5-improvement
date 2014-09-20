@@ -1224,6 +1224,7 @@ def get_authorship(authorship_uri):
         i = i + 1
     return authorship
 
+
 def get_publication(publication_uri, get_authors=True):
     """
     Given a URI, return an object that contains the publication it represents.
@@ -1232,7 +1233,12 @@ def get_publication(publication_uri, get_authors=True):
 
     The resulting object can be displayed using string_from_document
     """
-    publication = {'publication_uri':publication_uri} #include the uri
+    from vivofoundation import get_triples
+    from vivofoundation import get_datetime_value
+    from vivofoundation import get_webpage
+    from vivofoundation import get_vivo_value
+
+    publication = {'publication_uri': publication_uri}  # include the uri
     triples = get_triples(publication_uri)
     publication['grants_cited'] = []
     publication['keyword_list'] = []
@@ -1313,11 +1319,9 @@ def get_publication(publication_uri, get_authors=True):
 
         if p == "http://vivoweb.org/ontology/core#dateTimeValue":
             datetime_value = get_datetime_value(o)
-            try:
-                publication['date'] = datetime_value['date']
-            except:
-                pass
-        i = i + 1
+            if 'date_time' in datetime_value:
+                publication['date_time'] = datetime_value['date_time']
+        i += 1
 
     # deref the authorships
 
@@ -1333,25 +1337,28 @@ def get_publication(publication_uri, get_authors=True):
                 author_uri = authorship['author_uri']
                 if 'author_rank' in authorship:
                     rank = authorship['author_rank']
-                    authors[rank] = {'first':get_vivo_value(author_uri,
-                        "foaf:firstName"), 'middle':get_vivo_value(author_uri,
-                        "vivo:middleName"), 'last':get_vivo_value(author_uri,
+                    authors[rank] = {'first': get_vivo_value(author_uri,
+                        "foaf:firstName"), 'middle': get_vivo_value(author_uri,
+                        "vivo:middleName"), 'last': get_vivo_value(author_uri,
                         "foaf:lastName")}
                 publication['author_uris'].append(author_uri)
         publication['authors'] = authors
 
     return publication
 
+
 def get_publication_venue(publication_venue_uri):
     """
     Given a URI, return an object that contains the publication venue it
     represents
     """
+    from vivofoundation import get_triples
+
     publication_venue = {'publication_venue_uri':publication_venue_uri}
     triples = get_triples(publication_venue_uri)
     try:
         count = len(triples["results"]["bindings"])
-    except:
+    except IndexError:
         count = 0
     i = 0
     while i < count:
@@ -1362,8 +1369,9 @@ def get_publication_venue(publication_venue_uri):
             publication_venue['issn'] = o
         if p == "http://www.w3.org/2000/01/rdf-schema#label":
             publication_venue['label'] = o
-        i = i + 1
+        i += 1
     return publication_venue
+
 
 def make_doi_dictionary(debug=False):
     """

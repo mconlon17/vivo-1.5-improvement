@@ -3,48 +3,52 @@
 
     Version 0.1 MC 2013-12-27
     --  Initial version.
+    Version 0.2 MC 2014-09-18
+    --  Update for PEP 8 and Tools 2
 """
 
-__author__      = "Michael Conlon"
-__copyright__   = "Copyright 2013, University of Florida"
-__license__     = "BSD 3-Clause license"
-__version__     = "0.1"
+__author__ = "Michael Conlon"
+__copyright__ = "Copyright 2014, University of Florida"
+__license__ = "BSD 3-Clause license"
+__version__ = "0.2"
 
-import vivotools as vt
+from vivofoundation import get_references
 from datetime import datetime
 
 #  Test cases for access and display functions
 
+print datetime.now(), "Start"
+
 print "\nDateTime"
-print vt.get_references("http://vivo.ufl.edu/individual/n7860108656")
+print get_references("http://vivo.ufl.edu/individual/n7860108656")
 
 
 print "\nDateTimeInterval"
-print vt.get_references("http://vivo.ufl.edu/individual/n182882417")
+print get_references("http://vivo.ufl.edu/individual/n182882417")
 
 print "\nOrganization"
-print vt.get_references("http://vivo.ufl.edu/individual/n8763427")
-
+print get_references("http://vivo.ufl.edu/individual/n8763427")
 
 print "\nAuthorship"
-print vt.get_references("http://vivo.ufl.edu/individual/n148010391")
+print get_references("http://vivo.ufl.edu/individual/n148010391")
 
 print "\nRole"
-print vt.get_references("http://vivo.ufl.edu/individual/n1864549239")
-
+print get_references("http://vivo.ufl.edu/individual/n1864549239")
 
 print "\nPerson"
-print vt.get_references("http://vivo.ufl.edu/individual/n39051")
+print get_references("http://vivo.ufl.edu/individual/n39051")
 
 print "\nNot Found"
-print vt.get_references("http://vivo.ufl.edu/notfound")
+print get_references("http://vivo.ufl.edu/notfound")
 
 print "\nPublication Venue"
-print vt.get_references("http://vivo.ufl.edu/individual/n378789540")
+print get_references("http://vivo.ufl.edu/individual/n378789540")
 
 print "\nPaper"
-print vt.get_references("http://vivo.ufl.edu/individual/n4703866415")
+print get_references("http://vivo.ufl.edu/individual/n4703866415")
 
 print "\nGrant"
-print vt.get_references("http://vivo.ufl.edu/individual/n614029206")
+print get_references("http://vivo.ufl.edu/individual/n614029206")
+
+print datetime.now(), "Finish"
 

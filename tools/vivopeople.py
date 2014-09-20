@@ -5,7 +5,7 @@
     
     repair_email
     get_position_type
-    improve_jobcode_decription
+    improve_jobcode_description
     get_telephone
     get_name
     add_position
@@ -117,6 +117,7 @@ def repair_phone_number(phone, debug=False):
         print phone.ljust(25), updated_phone.ljust(25)
     return updated_phone
 
+
 def get_position_type(salary_plan):
     """
     Given a salary plan code, map to one of the VIVO position types
@@ -165,6 +166,7 @@ def get_position_type(salary_plan):
         }
     position_type = position_dict.get(salary_plan, None)
     return position_type
+
 
 def improve_jobcode_description(s):
     """
@@ -294,6 +296,7 @@ def improve_jobcode_description(s):
     t = t.replace(" #", "-") # restore -
     return t[:-1] # Take off the trailing space
 
+
 def get_position_uris(person_uri):
     """
     Given a person_uri, return a list of the position_uris for that
@@ -306,7 +309,7 @@ def get_position_uris(person_uri):
 
     SELECT ?position_uri
       WHERE {
-        <person_uri> vivo:relatedBy ?position_uri .
+        <person_uri> vivo:personInPosition ?position_uri .
         ?position_uri rdf:type vivo:Position .
     }
     group by ?position_uri
