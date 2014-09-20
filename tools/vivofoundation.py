@@ -428,8 +428,10 @@ def merge_uri(from_uri, to_uri):
     single_valued_predicates = [
         "rdfs:label",
         "ufVivo:ufid",
+        "ufVivo:homeDept",
         "foaf:firstName",
         "foaf:lastName",
+        "bibo:namePrefix",
         "bibo:middlename"
         ]
     srdf = ""
