@@ -745,13 +745,14 @@ def get_value(uri, predicate):
     --  this function is very inefficient, making a SPARQL query for every
         value. Use only when strictly needed!
     """
-    query = tempita.Template("""
+    query = """
     SELECT ?o WHERE
     {
     <{{uri}}> {{predicate}} ?o .
     }
-    """)
-    query = query.substitute(uri=uri, predicate=predicate)
+    """
+    query = query.replace("{{uri}}", uri)
+    query = query.replace("{{predicate}}", predicate)
     result = vivo_sparql_query(query)
     try:
         b = result["results"]["bindings"][0]
@@ -759,6 +760,7 @@ def get_value(uri, predicate):
         return o
     except:
         return None
+
 
 def find_vivo_uri(predicate, value):
     """

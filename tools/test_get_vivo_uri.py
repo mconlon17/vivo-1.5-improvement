@@ -16,9 +16,9 @@ __version__ = "0.2"
 from vivofoundation import get_vivo_uri 
 from datetime import datetime
 
-print datetime.now(),"Start"
+print datetime.now(), "Start"
 
-for i in range(0,9):
+for i in range(0, 9):
     print get_vivo_uri()
 
-print datetime.now(),"Finished"
+print datetime.now(), "Finished"

@@ -192,6 +192,8 @@ def improve_jobcode_description(s):
     t = t.replace("Adv ", "Advisory ")
     t = t.replace("Agric ", "Agricultural ")
     t = t.replace("Alumn Aff ", "Alumni Affairs ")
+    t = t.replace("Anal", "Analyst")
+    t = t.replace("Ass", "Assistant")
     t = t.replace("Ast #R ", "Research Assistant ")
     t = t.replace("Ast #G ", "Grading Assistant ")
     t = t.replace("Ast #T ", "Teaching Assistant ")
@@ -206,13 +208,17 @@ def improve_jobcode_description(s):
     t = t.replace("Couns ", "Counselor ")
     t = t.replace("Adj ", "Adjunct ")
     t = t.replace("Dist ", "Distinguished ")
+    t = t.replace("Chem", "Chemist")
     t = t.replace("Chr ", "Chair ")
     t = t.replace("Cio ", "Chief Information Officer ")
+    t = t.replace("Comm", "Communications")
     t = t.replace("Coo ", "Chief Operating Officer ")
     t = t.replace("Coord ", "Coordinator ")
     t = t.replace("Co ", "Courtesy ")
     t = t.replace("Clin ", "Clinical ")
+    t = t.replace("Clrk", "Clerk")
     t = t.replace("Dn ", "Dean ")
+    t = t.replace("Fin", "Financial")
     t = t.replace("Finan ", "Financial ")
     t = t.replace("Stu ", "Student ")
     t = t.replace("Prg ", "Program ")
@@ -223,6 +229,7 @@ def improve_jobcode_description(s):
     t = t.replace("Tech ", "Technician ")
     t = t.replace("Progs ", "Programs ")
     t = t.replace("Facil ", "Facility ")
+    t = t.replace("Hlt", "Health")
     t = t.replace("Hlth ", "Health ")
     t = t.replace("Int ", "Interim ")
     t = t.replace("Sctst ", "Scientist ")
@@ -233,7 +240,9 @@ def improve_jobcode_description(s):
     t = t.replace("Enforce ", "Enforcement ")
     t = t.replace("Environ ", "Environmental ")
     t = t.replace("Gen ", "General ")
+    t = t.replace("Grd", "Graduate")
     t = t.replace("Jnt ", "Joint ")
+    t = t.replace("Jr", "Junior")
     t = t.replace("Eng ", "Engineer ")
     t = t.replace("Ctr ", "Center ")
     t = t.replace("Opr ", "Operator ")
@@ -282,6 +291,7 @@ def improve_jobcode_description(s):
     t = t.replace("Spv ", "Supervisor ")
     t = t.replace("Supv ", "Supervisor ")
     t = t.replace("Supt ", "Superintendant ")
+    t = t.replace("Stud", "Student")
     t = t.replace("Pky ", "P. K. Yonge ")
     t = t.replace("Ii ", "II ")
     t = t.replace("Iii ", "III ")
@@ -420,7 +430,8 @@ def get_vcard(vcard_uri):
 
     # And now deref each of the uris to get the data values.
 
-    vcard['name'] = get_name(vcard['name_uri'])
+    if 'name_uri' in vcard:
+        vcard['name'] = get_name(vcard['name_uri'])
 
     if vcard.get('title_uri', None) is not None:
         vcard['title'] = get_vivo_value(vcard['title_uri'],'vcard:title')

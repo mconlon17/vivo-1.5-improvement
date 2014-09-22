@@ -1,6 +1,6 @@
 """
     test_get_vcard.py -- Given the URI of a vcard, return values and uris
-    assocuiated withe vcard.  Handle repeating values such as telephone
+    associated with the vcard.  Handle repeating values such as telephone
     and email.
 
     Version 0.1 MC 2014-07-24
@@ -16,7 +16,6 @@ from vivopeople import get_vcard
 from datetime import datetime
 import json
 
-print datetime.now(),"Start"
-print "\n",json.dumps(get_vcard("http://vivo.ufl.edu/individual/n6754"),
-                      indent=4)
-print datetime.now(),"Finish"
+print datetime.now(), "Start"
+print "\n", json.dumps(get_vcard("http://vivo.ufl.edu/individual/n6754"), indent=4)
+print datetime.now(), "Finish"
