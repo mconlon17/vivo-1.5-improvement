@@ -12,7 +12,7 @@ __version__ = "2.01"
 concept_dictionary = {}
 
 VIVO_URI_PREFIX = "http://vivo.ufl.edu/individual/"
-VIVO_QUERY_URI = "http://sparql.vivo.ufl.edu/VIVO/sparql"  # UF VIVO Production
+VIVO_QUERY_URI = "http://sparql.vivo.ufl.edu/VIVO/sparql"  # UF Production
 
 import urllib
 import json
@@ -22,6 +22,7 @@ from datetime import datetime
 import time
 import csv
 
+
 class UnknownDateTimePrecision(Exception):
     """
     Functions that accept a DateTime Precision will throw this exception if the
@@ -29,14 +30,16 @@ class UnknownDateTimePrecision(Exception):
     """
     pass
 
+
 def comma_space(s):
     """
     insert a space after every comma in s unless s ends in a comma
     """
     k = s.find(',')
-    if k > -1 and k < len(s)-1 and s[k+1] != " ":
+    if k > -1 and k < len(s) - 1 and s[k+1] != " ":
         s = s[0:k] + ', ' + comma_space(s[k+1:])
     return s
+
 
 def make_datetime_rdf(value, title):
     """

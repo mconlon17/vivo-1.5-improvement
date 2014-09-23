@@ -19,7 +19,7 @@ print datetime.now(), "Making section dictionary"
 section_dictionary = make_section_dictionary(debug=True)
 print datetime.now(), "section dictionary has ", len(section_dictionary),\
     "entries"
-print "datetime.now(), First 20 entries:"
+print datetime.now(), "First 20 entries:"
 labels = sorted(section_dictionary.keys()[0:20])
 for label in labels:
     uri = section_dictionary[label]

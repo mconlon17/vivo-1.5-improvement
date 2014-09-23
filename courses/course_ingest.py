@@ -31,8 +31,11 @@ from vivocourses import prepare_teaching_data
 from vivocourses import make_term_dictionary
 from vivocourses import make_course_dictionary
 from vivocourses import make_section_dictionary
-
-
+from vivocourses import make_course_rdf
+from vivocourses import make_section_rdf
+from vivofoundation import rdf_header
+from vivofoundation import rdf_footer
+import vivofoundation as vt
 from datetime import datetime
 import codecs
 
@@ -54,15 +57,13 @@ exc_file = codecs.open(file_name+"_exc.txt", mode='w', encoding='ascii',
                        errors='xmlcharrefreplace')
 add_ufid = {}
 
-print >>add_file, vt.rdf_header()
-
+print >>add_file, rdf_header()
 print >>log_file, datetime.now(), "Course ingest. Version", __version__,\
-    "VIVOTools", vt.__version__
+    "VIVO Tools", vt.__version__
 print >>log_file, datetime.now(), "Make UF Taught Dictionary"
-taught_dictionary = make_taught_dictionary(filename='course_data.csv',\
-    debug=debug)
+teaching_data = prepare_teaching_data(filename='course_data.csv', debug=debug)
 print >>log_file, datetime.now(), "Taught dictionary has ",\
-    len(taught_dictionary), " entries"
+    len(teaching_data), " entries"
 print >>log_file, datetime.now(), "Make VIVO Term Dictionary"
 term_dictionary = make_term_dictionary(debug=debug)
 print >>log_file, datetime.now(), "VIVO Term dictionary has ",\
@@ -83,63 +84,58 @@ print >>log_file, datetime.now(), "VIVO UFID dictionary has ",\
 # Loop through the course data.  Process each row
 
 print >>log_file, datetime.now(), "Begin Processing"
-for row in taught_dictionary.keys():
-
-    r = random.random()
-    if r > sample:
-        continue
+for teaching_record in teaching_data.values():
 
     ardf = ""
-    taught_data = taught_dictionary[row]
 
     # Look for the instructor.  If not found, write to exception log
 
     try:
-        person_uri = ufid_dictionary[taught_data['ufid']]
-        taught_data['person_uri'] = person_uri
+        person_uri = ufid_dictionary[teaching_record['ufid']]
+        teaching_record['person_uri'] = person_uri
     except:
         print >>exc_file, "No such instructor on row", row, "UFID = ", \
-            taught_data['ufid']
-        add_ufid[taught_data['ufid']] = True
+            teaching_record['ufid']
+        add_ufid[teaching_record['ufid']] = True
 
         continue
 
     # Look for the term.  If not found, write to exception log
 
     try:
-        term_uri = term_dictionary[taught_data['term_name']]
-        taught_data['term_uri'] = term_uri
+        term_uri = term_dictionary[teaching_record['term_name']]
+        teaching_record['term_uri'] = term_uri
     except:
         print >>exc_file, "No such term on row", row, "Term = ",\
-            taught_data['term_name']
+            teaching_record['term_name']
         continue
 
     # Look for the course.  If not found, add it
 
     try:
-        course_uri = course_dictionary[taught_data['course_number']]
-        taught_data['course_new'] = False
+        course_uri = course_dictionary[teaching_record['course_number']]
+        teaching_record['course_new'] = False
     except:
-        [add, course_uri] = make_course_rdf(taught_data)
+        [add, course_uri] = make_course_rdf(teaching_record)
         ardf = ardf + add
-        print >>log_file, "Add course", taught_data['course_name'],\
+        print >>log_file, "Add course", teaching_record['course_name'],\
             "at", course_uri
-        course_dictionary[taught_data['course_number']] = course_uri
-        taught_data['course_new'] = True
-    taught_data['course_uri'] = course_uri
+        course_dictionary[teaching_record['course_number']] = course_uri
+        teaching_record['course_new'] = True
+    teaching_record['course_uri'] = course_uri
 
     # Look for the section.  If not found, add it
 
     try:
-        section_uri = section_dictionary[taught_data['section_name']]
+        section_uri = section_dictionary[teaching_record['section_name']]
     except:
-        [add, section_uri] = make_section_rdf(taught_data)
-        print >>log_file, "Add section", taught_data['section_name'],\
+        [add, section_uri] = make_section_rdf(teaching_record)
+        print >>log_file, "Add section", teaching_record['section_name'],\
             "at", section_uri
         ardf = ardf + add
-        section_dictionary[taught_data['section_name']] = section_uri
+        section_dictionary[teaching_record['section_name']] = section_uri
 
-    taught_data['section_uri'] = section_uri
+    teaching_record['section_uri'] = section_uri
 
     if ardf != "":
         add_file.write(ardf)
@@ -157,7 +153,7 @@ for ufid in sorted(add_ufid.keys()):
         "NULL" + "|" + "NULL" + "|" + "NULL" + "|" + "NULL" + "|" + \
         "NULL" + "|" + "0"
 
-print >>add_file, vt.rdf_footer()
+print >>add_file, rdf_footer()
 print >>log_file, datetime.now(), "End Processing"
 
 add_file.close()

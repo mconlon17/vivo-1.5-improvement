@@ -113,7 +113,8 @@ def make_section_rdf(taught_data):
         harvest_datetime=datetime.now().isoformat())
     return [rdf, section_uri]
 
-def make_taught_dictionary(filename="course_data.csv", debug=False):
+
+def prepare_teaching_data(filename="course_data.csv", debug=False):
     """
     Read a CSV file with course data.  Create a dictionary with one entry
     per OUR record
@@ -145,6 +146,7 @@ def make_taught_dictionary(filename="course_data.csv", debug=False):
     pickle.dump(taught_dictionary, open('taught_data.pcl', 'w'))
     return taught_dictionary
 
+
 def term_name(term_number):
     """
     Given a UF term number, return the UF term name
@@ -163,6 +165,7 @@ def term_name(term_number):
         return term_name
     else:
         raise NoSuchAcademicTermException(term_number)
+
 
 def make_term_dictionary(debug=False):
     """
@@ -196,6 +199,7 @@ def make_term_dictionary(debug=False):
 
     return term_dictionary
 
+
 def make_course_dictionary(debug=False):
     """
     Make a course dictionary from VIVO contents.  Key is course number
@@ -228,6 +232,7 @@ def make_course_dictionary(debug=False):
         i = i + 1
 
     return course_dictionary
+
 
 def make_section_dictionary(debug=False):
     """
