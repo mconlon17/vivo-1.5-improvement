@@ -16,7 +16,7 @@
     To Do:
     --  Use a prepare function to go through the data
     --  Use tools from vivocourses
-    --  Move to an update designl. Even though updates are rare, we need to
+    --  Move to an update design. Even though updates are rare, we need to
         be able to handle them
     --  Update for VIVO-ISF
 """
@@ -26,17 +26,22 @@ __copyright__ = "Copyright 2014, University of Florida"
 __license__ = "BSD 3-Clause license"
 __version__ = "0.6"
 
+from vivopeople import make_ufid_dictionary
+from vivocourses import prepare_teaching_data
+from vivocourses import make_term_dictionary
+from vivocourses import make_course_dictionary
+from vivocourses import make_section_dictionary
+
+
 from datetime import datetime
-import os
-import sys
 import codecs
 
-action_report = {} # determine the action to be taken for each UFID
+action_report = {}  # determine the action to be taken for each UFID
 
 # Driver program starts here
 
 debug = False
-sample = 1.0 # Fraction of records to be processed.  Set to 1.0 to process all
+sample = 1.0  # Fraction of records to be processed.  Set to 1.0 to process all
 
 file_name = "courses"
 add_file = codecs.open(file_name+"_add.rdf", mode='w', encoding='ascii',
@@ -71,7 +76,7 @@ section_dictionary = make_section_dictionary(debug=debug)
 print >>log_file, datetime.now(), "VIVO Section dictionary has ",\
     len(section_dictionary), " entries"
 print >>log_file, datetime.now(), "Make VIVO UFID Dictionary"
-ufid_dictionary = vt.make_ufid_dictionary(debug=debug)
+ufid_dictionary = make_ufid_dictionary(debug=debug)
 print >>log_file, datetime.now(), "VIVO UFID dictionary has ",\
     len(ufid_dictionary), " entries"
 
