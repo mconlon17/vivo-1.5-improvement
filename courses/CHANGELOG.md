@@ -34,6 +34,7 @@
     --  Runs with current vivotools
     Version 0.6 MC 2014-09-23
     --  Updated for PEP 8 and Tools 2.0
+    --  Use argparse to look for a command line argument giving the course file name
 
     Future enhancements:
      -- Handle instructor new to existing section (team teaching).

@@ -14,8 +14,6 @@
     See CHANGELOG.md for history
 
     To Do:
-    --  Use a prepare function to go through the data
-    --  Use tools from vivocourses
     --  Move to an update design. Even though updates are rare, we need to
         be able to handle them
     --  Update for VIVO-ISF
@@ -38,15 +36,21 @@ from vivofoundation import rdf_footer
 import vivofoundation as vt
 from datetime import datetime
 import codecs
+import argparse
 
 action_report = {}  # determine the action to be taken for each UFID
 
 # Driver program starts here
 
+parser = argparse.ArgumentParser()
+parser.add_argument("filename", help="name of file containing course data to be added to VIVO",
+                    default="course")
+args = parser.parse_args()
+
 debug = False
 sample = 1.0  # Fraction of records to be processed.  Set to 1.0 to process all
 
-file_name = "courses"
+file_name = args.filename
 add_file = codecs.open(file_name+"_add.rdf", mode='w', encoding='ascii',
                        errors='xmlcharrefreplace')
 pos_file = codecs.open(file_name+"_pos.txt", mode='w', encoding='ascii',
