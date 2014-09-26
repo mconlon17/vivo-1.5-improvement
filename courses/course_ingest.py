@@ -1,7 +1,7 @@
 #!/usr/bin/env/python
 
 """
-    course-ingest.py: Given course and section data from the Office of the
+    course_ingest.py: Given course and section data from the Office of the
     University Registrar (from the Enterprise Data Warehouse), add courses
     as necessary, and course sections of courses.  Links courses to instructors
     vis teacher roles, create a course web site object for each course.  Link
@@ -44,7 +44,7 @@ action_report = {}  # determine the action to be taken for each UFID
 
 parser = argparse.ArgumentParser()
 parser.add_argument("filename", help="name of file containing course data to be added to VIVO",
-                    default="course")
+                    default="course", nargs='?')
 args = parser.parse_args()
 
 debug = False

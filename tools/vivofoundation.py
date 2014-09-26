@@ -484,7 +484,7 @@ def remove_uri(uri):
 
     triples = get_triples(uri)["results"]["bindings"]
     for triple in triples:
-        p = translate_predicate(triple["p"]["value"])
+        p = tag_predicate(triple["p"]["value"])
         o = triple["o"]
         if o["type"] == "uri":
             [add, sub] = update_resource_property(uri, p, o["value"], None)
@@ -497,7 +497,7 @@ def remove_uri(uri):
     triples = get_references(uri)["results"]["bindings"]
     for triple in triples:
         s = triple["s"]["value"]
-        p = translate_predicate(triple["p"]["value"])
+        p = tag_predicate(triple["p"]["value"])
         [add, sub] = update_resource_property(s, p, uri, None)
         srdf = srdf + sub
     return srdf
@@ -537,7 +537,7 @@ def read_csv(filename, skip=True):
     separator in CSV files to allow commas to appear in values.
 
     CSV files read by this function follow these conventions:
-    --  use "|" as a seperator
+    --  use "|" as a separator
     --  have a first row that contains column headings.  Columns headings
         must be known to VIVO, typically in the form prefix:name
     --  all elements must have values.  To specify a missing value, use
@@ -547,7 +547,7 @@ def read_csv(filename, skip=True):
     -- if skip=True, rows with too many or too few data elements are skipped.
        if Skip=False, a RowError is thrown
 
-    CSV files processed by read_CSV will be returned as a dictionary of
+    CSV files processed by read_csv will be returned as a dictionary of
     dictionaries, one dictionary per row with a name of and an
     integer value for the row number of data.
 
@@ -570,7 +570,7 @@ def read_csv(filename, skip=True):
                 row[i] = ''
             i = i + 1
         if heading == []:
-            heading = row # the first row is the heading
+            heading = row  # the first row is the heading
             number_of_columns = len(heading)
             continue
         row_number = row_number + 1

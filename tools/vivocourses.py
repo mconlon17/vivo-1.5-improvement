@@ -119,13 +119,21 @@ def prepare_teaching_data(filename="course_data.csv", debug=False):
     Read a CSV file with course data.  Create a dictionary with one entry
     per OUR record
     """
+
+    import os
+    import pickle
+    from vivofoundation import read_csv
+
+
     if os.path.isfile('taught_data.pcl'):
         taught_dictionary = pickle.load(open('taught_data.pcl', 'r'))
         return taught_dictionary
-    taught_dictionary = vt.read_csv(filename)
+    taught_dictionary = read_csv(filename)
 
-    for row in taught_dictionary.keys():
-        taught_data = taught_dictionary[row]
+    for row, taught_data in taught_dictionary.items():
+
+        print taught_data
+
         taught_data['ufid'] = taught_data['UF_UFID'].ljust(8, '0')
         taught_data['term_name'] = term_name(taught_data['UF_TERM'])
         taught_data['course_number'] = taught_data['UF_COURSE_CD']
@@ -133,15 +141,9 @@ def prepare_teaching_data(filename="course_data.csv", debug=False):
             ' ' + taught_data['UF_COURSE_NAME'].title()
         taught_data['section_number'] = taught_data['UF_SECTION']
         taught_data['section_name'] = taught_data['course_number'] + ' ' + \
-                                      taught_data['term_name'] + ' ' + \
-                                      taught_data['UF_SECTION']
+            taught_data['term_name'] + ' ' + \
+            taught_data['UF_SECTION']
         taught_dictionary[row] = taught_data
-
-    if debug:
-        print >>log_file, datetime.now(), "Taught Data has",\
-            len(taught_dictionary), "rows"
-        print >>log_file, datetime.now(), "First row",\
-            taught_dictionary[1]
 
     pickle.dump(taught_dictionary, open('taught_data.pcl', 'w'))
     return taught_dictionary
