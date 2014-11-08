@@ -1,6 +1,6 @@
 # VIVO 1.5 Improvement
 
-A master project to imporve the UF VIVO ingests and support tools.  In particular:
+A master project to improve the UF VIVO ingests and support tools.  In particular:
 
 1. Upgrade the person ingest
 1. Upgrade the grant ingest
